@@ -63,7 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
             itemBuilder: (_) => const [
-              PopupMenuItem(value: 'clear_filters', child: Text('Clear filters')),
+              PopupMenuItem(
+                  value: 'clear_filters', child: Text('Clear filters')),
             ],
           ),
         ],
@@ -81,23 +82,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: InputDecoration(
                       hintText: 'Search tasks, descriptions, tags...',
                       prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)),
                     ),
-                    onChanged: (v) =>
-                        provider.setFilter(provider.filter.copyWith(searchQuery: v)),
+                    onChanged: (v) => provider
+                        .setFilter(provider.filter.copyWith(searchQuery: v)),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
+                  flex: 2,
                   child: DropdownButtonFormField<SortBy>(
                     value: provider.sortBy,
                     onChanged: (by) {
                       if (by != null) provider.setSort(by);
                     },
                     items: const [
-                      DropdownMenuItem(value: SortBy.createdAt, child: Text('Sort: Created')),
-                      DropdownMenuItem(value: SortBy.dueDate, child: Text('Sort: Due')),
-                      DropdownMenuItem(value: SortBy.priority, child: Text('Sort: Priority')),
+                      DropdownMenuItem(
+                          value: SortBy.createdAt,
+                          child: Text('Sort: Created')),
+                      DropdownMenuItem(
+                          value: SortBy.dueDate, child: Text('Sort: Due')),
+                      DropdownMenuItem(
+                          value: SortBy.priority,
+                          child: Text('Sort: Priority')),
                     ],
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -108,8 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(width: 12),
                 IconButton(
                   tooltip: provider.ascending ? 'Ascending' : 'Descending',
-                  onPressed: () => provider.setSort(provider.sortBy, ascending: !provider.ascending),
-                  icon: Icon(provider.ascending ? Icons.arrow_upward : Icons.arrow_downward),
+                  onPressed: () => provider.setSort(provider.sortBy,
+                      ascending: !provider.ascending),
+                  icon: Icon(provider.ascending
+                      ? Icons.arrow_upward
+                      : Icons.arrow_downward),
                 ),
               ],
             ),
@@ -122,23 +133,28 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 FilterChip(
                   label: const Text('All'),
-                  selected: provider.filter.completed == null && !provider.filter.overdueOnly && provider.filter.priority == null,
+                  selected: provider.filter.completed == null &&
+                      !provider.filter.overdueOnly &&
+                      provider.filter.priority == null,
                   onSelected: (_) => provider.setFilter(const TaskFilter()),
                 ),
                 FilterChip(
                   label: const Text('Pending'),
                   selected: provider.filter.completed == false,
-                  onSelected: (_) => provider.setFilter(provider.filter.copyWith(completed: false)),
+                  onSelected: (_) => provider
+                      .setFilter(provider.filter.copyWith(completed: false)),
                 ),
                 FilterChip(
                   label: const Text('Completed'),
                   selected: provider.filter.completed == true,
-                  onSelected: (_) => provider.setFilter(provider.filter.copyWith(completed: true)),
+                  onSelected: (_) => provider
+                      .setFilter(provider.filter.copyWith(completed: true)),
                 ),
                 FilterChip(
                   label: const Text('Overdue'),
                   selected: provider.filter.overdueOnly,
-                  onSelected: (_) => provider.setFilter(provider.filter.copyWith(overdueOnly: !provider.filter.overdueOnly)),
+                  onSelected: (_) => provider.setFilter(provider.filter
+                      .copyWith(overdueOnly: !provider.filter.overdueOnly)),
                 ),
                 const SizedBox(width: 8),
                 DropdownButton<Priority?>(
@@ -146,10 +162,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   underline: const SizedBox.shrink(),
                   hint: const Text('Priority'),
                   items: [
-                    const DropdownMenuItem(value: null, child: Text('Any priority')),
-                    ...Priority.values.map((p) => DropdownMenuItem(value: p, child: Text(priorityLabel(p))))
+                    const DropdownMenuItem(
+                        value: null, child: Text('Any priority')),
+                    ...Priority.values.map((p) => DropdownMenuItem(
+                        value: p, child: Text(priorityLabel(p))))
                   ],
-                  onChanged: (p) => provider.setFilter(provider.filter.copyWith(priority: p)),
+                  onChanged: (p) =>
+                      provider.setFilter(provider.filter.copyWith(priority: p)),
                 ),
               ],
             ),
@@ -164,7 +183,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       final t = tasks[i];
                       return TaskItem(
                         task: t,
-                        onToggle: (val) => provider.toggleComplete(t, val ?? false),
+                        onToggle: (val) =>
+                            provider.toggleComplete(t, val ?? false),
                         onEdit: () => _openEditor(context, task: t),
                         onDelete: () => provider.deleteTask(t.id),
                       );
