@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:task_manager_flutter/screens/home_screen.dart';
 import '../models/task.dart';
 import '../utils/priority.dart';
 
@@ -67,18 +68,22 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(widget.task == null ? 'New Task' : 'Edit Task', style: Theme.of(context).textTheme.titleLarge),
+            Text(widget.task == null ? 'New Task' : 'Edit Task',
+                style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 12),
             TextFormField(
               controller: _title,
-              decoration: const InputDecoration(labelText: 'Title', border: OutlineInputBorder()),
-              validator: (v) => (v == null || v.trim().isEmpty) ? 'Title is required' : null,
+              decoration: const InputDecoration(
+                  labelText: 'Title', border: OutlineInputBorder()),
+              validator: (v) =>
+                  (v == null || v.trim().isEmpty) ? 'Title is required' : null,
             ),
             const SizedBox(height: 12),
             TextFormField(
               controller: _desc,
               maxLines: 3,
-              decoration: const InputDecoration(labelText: 'Description', border: OutlineInputBorder()),
+              decoration: const InputDecoration(
+                  labelText: 'Description', border: OutlineInputBorder()),
             ),
             const SizedBox(height: 12),
             Row(
@@ -87,11 +92,14 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
                   child: InkWell(
                     onTap: _pickDueDate,
                     child: InputDecorator(
-                      decoration: const InputDecoration(labelText: 'Due date', border: OutlineInputBorder()),
+                      decoration: const InputDecoration(
+                          labelText: 'Due date', border: OutlineInputBorder()),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(_due == null ? 'No due date' : DateFormat.yMMMd().format(_due!)),
+                          Text(_due == null
+                              ? 'No due date'
+                              : DateFormat.yMMMd().format(_due!)),
                           const Icon(Icons.calendar_today, size: 18),
                         ],
                       ),
@@ -103,10 +111,13 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
                   child: DropdownButtonFormField<Priority>(
                     value: _priority,
                     items: Priority.values
-                        .map((p) => DropdownMenuItem(value: p, child: Text(priorityLabel(p))))
+                        .map((p) => DropdownMenuItem(
+                            value: p, child: Text(priorityLabel(p))))
                         .toList(),
-                    onChanged: (p) => setState(() => _priority = p ?? Priority.medium),
-                    decoration: const InputDecoration(labelText: 'Priority', border: OutlineInputBorder()),
+                    onChanged: (p) =>
+                        setState(() => _priority = p ?? Priority.medium),
+                    decoration: const InputDecoration(
+                        labelText: 'Priority', border: OutlineInputBorder()),
                   ),
                 ),
               ],
@@ -116,8 +127,7 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
               controller: _tags,
               decoration: const InputDecoration(
                   labelText: 'Tags (comma separated)',
-                  border: OutlineInputBorder()
-              ),
+                  border: OutlineInputBorder()),
             ),
             const SizedBox(height: 16),
             Row(
@@ -133,9 +143,9 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
                             .map((e) => e.trim())
                             .where((e) => e.isNotEmpty)
                             .toList();
-                        final updated = (widget.task ??
-                                Task(id: 'tmp', title: _title.text))
-                            .copyWith(
+                        final updated =
+                            (widget.task ?? Task(id: 'tmp', title: _title.text))
+                                .copyWith(
                           title: _title.text,
                           description: _desc.text.isEmpty ? null : _desc.text,
                           dueDate: _due,
@@ -143,13 +153,22 @@ class _TaskEditorSheetState extends State<TaskEditorSheet> {
                           tags: tags,
                         );
                         widget.onSave(updated);
-                        Navigator.of(context).pop();
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                          (route) =>
+                              false, // Condition: keep routes where this returns true
+                        );
+                        // Navigator.of(context).pop();
                       }
                     },
                   ),
                 ),
               ],
             ),
+            SizedBox(
+              height: 30,
+            )
           ],
         ),
       ),
