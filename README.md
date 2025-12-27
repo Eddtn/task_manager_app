@@ -1,29 +1,29 @@
-# Task Manager (Flutter • Provider + Hive)
+# TaskFlow — Modern Task Manager (Flutter)
 
-A portfolio-ready task manager app with:
-- Create, edit, delete tasks
-- Priority, due dates, tags
-- Search, filter, sort (status/priority/due)
-- Local persistence via **Hive** (works on **Android, iOS, Web, Desktop**)
-- Clean architecture with **Provider (ChangeNotifier)**
+[![Flutter](https://img.shields.io/badge/Flutter-3.19+-blue)](https://flutter.dev)
+[![Drift](https://img.shields.io/badge/Drift-SQLite-green)](https://drift.simonbinder.eu/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Quick start
+A beautiful, performant, offline-first task management app built with Flutter.
 
-1. Create a new Flutter project (so you get platform folders):
-   ```bash
-   flutter create task_manager_flutter
-   ```
+### Features
+- Create, edit, complete, and delete tasks
+- Due dates, priorities (High/Medium/Low), custom tags
+- Powerful filtering: search, pending/completed, overdue, priority
+- Sorting by creation, due date, or priority
+- Full offline persistence with Drift (SQLite on mobile/desktop, IndexedDB on web)
+- Responsive Material 3 design with custom bottom sheet editor
+- Debounced search and smooth animations
 
-2. Replace the generated `pubspec.yaml` and `lib/` with the ones in this zip.
+### Tech Stack
+- Flutter 3.19+
+- State Management: Provider
+- Local Database: Drift (cross-platform)
+- UI: Material 3, Slivers, CustomScrollView
 
-3. Install deps & run:
-   ```bash
-   cd task_manager_flutter
-   flutter pub get
-   flutter run -d chrome   # or your device
-   ```
-
-## Notes
-- Hive boxes are initialized in `main.dart`.
-- Manual `TaskAdapter` (no codegen needed).
-- For web, Hive uses IndexedDB automatically.
+### Run Locally
+```bash
+git clone https://github.com/eddtn/task_manager_app.git
+cd task-manager-flutter
+flutter pub get
+flutter run
